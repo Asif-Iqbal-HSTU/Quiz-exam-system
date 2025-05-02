@@ -9,6 +9,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Select } from '@/components/ui/select';
+import { X } from 'lucide-react';
 
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -53,6 +54,12 @@ export default function ExamBuilder() {
         post(route('exams.store'));
     };
 
+    const removeQuestion = (index: number) => {
+        const updatedQuestions = data.questions.filter((_, i) => i !== index);
+        setData('questions', updatedQuestions);
+    };
+
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
@@ -81,7 +88,16 @@ export default function ExamBuilder() {
                                     />
                                 </div>
                                 {data.questions.map((question, index) => (
-                                    <div key={index} className="mb-6 p-4 border rounded">
+                                    <div key={index} className="mb-6 p-4 border rounded relative">
+                                        <button
+                                            type="button"
+                                            onClick={() => removeQuestion(index)}
+                                            className="absolute top-2 right-2 text-red-600 hover:text-red-800"
+                                            aria-label="Remove Question"
+                                            title="Remove Question"
+                                        >
+                                            <X size={20} />
+                                        </button>
                                         <div className="grid gap-6">
                                             <div className="grid gap-2">
                                                 <Label className="block font-semibold mb-1">Question {index + 1}</Label>
