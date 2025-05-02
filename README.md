@@ -1,4 +1,4 @@
-# Journal App
+# Quiz Exam System
 
 ## Introduction
 
