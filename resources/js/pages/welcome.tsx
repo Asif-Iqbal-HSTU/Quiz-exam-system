@@ -1,6 +1,7 @@
 import { type SharedData } from '@/types';
 import { Head, Link, usePage } from '@inertiajs/react';
 import { Github, Linkedin, LinkedinIcon } from 'lucide-react';
+import { useEffect } from 'react';
 
 export default function Welcome() {
     const { auth } = usePage<SharedData>().props;
@@ -11,7 +12,15 @@ export default function Welcome() {
         role = auth.user.role;
         console.log(role);
     }
+    useEffect(() => {
+        const hasReloaded = sessionStorage.getItem('hasReloaded');
+        if (hasReloaded) {
+            sessionStorage.removeItem('hasReloaded');
+            console.log(hasReloaded);
+        }
+    }, []);
     return (
+
         <>
             <Head title="Welcome">
                 <link rel="preconnect" href="https://fonts.bunny.net" />
@@ -115,7 +124,7 @@ export default function Welcome() {
                                         </Link>
                                     ) : role === "examinee" ? (
                                         <Link
-                                            href={route('examinerDashboard')}
+                                            href={route('examineeDashboard')}
                                             className="inline-block rounded-sm border border-[#19140035] px-5 py-1.5 text-sm leading-normal text-[#1b1b18] hover:border-[#1915014a] dark:border-[#3E3E3A] dark:text-[#EDEDEC] dark:hover:border-[#62605b]"
                                         >
                                             Dashboard

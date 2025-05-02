@@ -28,9 +28,6 @@ interface ExamPageProps {
 }
 
 export default function ExamPage({ exam, participant_id }: ExamPageProps) {
-    /*useEffect(() => {
-        window.location.reload();
-    }, []);*/
 
     useEffect(() => {
         const intervalId = setInterval(() => {
@@ -61,26 +58,17 @@ export default function ExamPage({ exam, participant_id }: ExamPageProps) {
     const [csrfToken, setCsrfToken] = useState<string | null>(null);
 
     useEffect(() => {
-        // window.location.reload();
         const token = (document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement)?.content;
         setCsrfToken(token);
     }, []);
 
-    /*useEffect(() => {
-        const timer = setInterval(() => {
-            setTimeLeft(prev => {
-                if (prev <= 1) {
-                    clearInterval(timer);
-                    handleSubmit();
-                    alert('Time expired! Auto-submitting...');
-                    return 0;
-                }
-                return prev - 1;
-            });
-        }, 1000);
-
-        return () => clearInterval(timer);
-    }, []);*/
+    useEffect(() => {
+        const hasReloaded = sessionStorage.getItem('hasReloaded');
+        if (hasReloaded) {
+            sessionStorage.removeItem('hasReloaded');
+            console.log(hasReloaded);
+        }
+    }, []);
 
     useEffect(() => {
         if (!hasStarted) return;
@@ -249,51 +237,6 @@ export default function ExamPage({ exam, participant_id }: ExamPageProps) {
                         </div>
                     </div>
                 )}
-
-                {/*{showResult && (
-                    <div className="mt-6 p-4 border rounded shadow bg-gray-50">
-                        <h2 className="text-lg font-bold mb-2">Your Score: {score}</h2>
-
-                        <button
-                            className="mb-4 text-blue-600 underline"
-                            onClick={() => setShowDetails(prev => !prev)}
-                        >
-                            {showDetails ? 'Hide Details' : 'Show Answer Details'}
-                        </button>
-
-                        {showDetails && (
-                            <div className="space-y-4">
-                                {detailedAnswers.map((ans, idx) => (
-                                    <div key={idx} className="border p-3 rounded bg-white">
-                                        <p><strong>Q:</strong> {ans.question_text}</p>
-                                        <p className={ans.answer_text === 'Not Answered' ? 'text-red-600' : ''}>
-                                            <strong>Your Answer:</strong> {ans.answer_text}
-                                        </p>
-                                        <p><strong>Correct Answer:</strong> {ans.correct_answer}</p>
-                                    </div>
-                                ))}
-                            </div>
-                        )}
-                    </div>
-                )}*/}
-
-                {/*{showInstructions && (
-                    <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-                        <div className="bg-white p-6 rounded shadow-lg max-w-lg w-full">
-                            <h2 className="text-xl font-bold mb-4">Exam Instructions</h2>
-                            <ul className="list-disc pl-6 mb-4 text-left">
-                                <li>Do not reload or exit the page. It will automatically submit the exam.</li>
-                                <li>If time runs out, your answers will be auto-submitted.</li>
-                            </ul>
-                            <button
-                                className="bg-blue-600 text-white px-4 py-2 rounded"
-                                onClick={() => setShowInstructions(false)}
-                            >
-                                Start Exam
-                            </button>
-                        </div>
-                    </div>
-                )}*/}
 
                 {showPreExamModal && (
                     <div className="fixed inset-0 flex bg-[#32327aa0] shadow-sm items-center justify-center z-50">

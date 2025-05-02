@@ -3,6 +3,7 @@ import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link } from '@inertiajs/react';
 import { FileStack, ScrollText } from 'lucide-react';
+import { useEffect } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -12,6 +13,13 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 export default function ExamineeDashboard() {
+    useEffect(() => {
+        const hasReloaded = sessionStorage.getItem('hasReloaded');
+        if (hasReloaded) {
+            sessionStorage.removeItem('hasReloaded');
+            console.log(hasReloaded);
+        }
+    }, []);
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Examinee Dashboard" />
@@ -25,7 +33,7 @@ export default function ExamineeDashboard() {
                                 size={36}
                             />
                             <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                                Available Exams
+                                Exams
                             </h5>
 
                             <p className="font-normal text-gray-700 dark:text-gray-400">

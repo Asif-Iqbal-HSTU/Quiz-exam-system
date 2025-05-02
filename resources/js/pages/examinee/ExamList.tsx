@@ -36,18 +36,29 @@ interface Exam {
 }
 
 export default function ExamList({ exams }: { exams: Exam[] }) {
+
+
     const { auth } = usePage<SharedData>().props;
     const [selectedParticipant, setSelectedParticipant] = useState<Participant | null>(null);
-    /*Inertia.reload();
+
     useEffect(() => {
-        Inertia.reload({ only: ['exams'] });
-    }, []);*/
+        const hasReloaded = sessionStorage.getItem('hasReloaded');
+        console.log(hasReloaded);
+        if (!hasReloaded) {
+
+            console.log("hasReloaded");
+            sessionStorage.setItem('hasReloaded', 'true');
+            window.location.reload();
+            window.location.reload();
+            console.log(hasReloaded);
+        }
+    }, []);
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
             <div className="p-6">
-                <h1 className="mb-4 text-2xl font-bold">Available Exams</h1>
+                <h1 className="mb-4 text-2xl font-bold">Exams</h1>
                 <div className="grid auto-rows-min gap-4 md:grid-cols-3">
                     {exams.map((exam) => {
                         const participant = exam.participants.find(p => p.user.id === auth.user.id);

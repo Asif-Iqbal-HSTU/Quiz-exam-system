@@ -3,6 +3,7 @@ import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem, SharedData } from '@/types';
 import { Head, Link, usePage } from '@inertiajs/react';
 import { ScrollText } from 'lucide-react';
+import { useEffect } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -13,6 +14,9 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 export default function ExaminerDashboard() {
     const { auth } = usePage<SharedData>().props;
+    useEffect(() => {
+        sessionStorage.setItem('hasReloaded', 'false');
+    }, []);
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Examiner Dashboard" />
